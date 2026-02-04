@@ -1,40 +1,39 @@
+%global goipath         github.com/sentriz/cliphist
+Version:                0.7.0
+%gometa
+
 Name:           cliphist
-Version:        0.7.0
 Release:        1%{?dist}
 Summary:        Wayland clipboard manager with support for multimedia
-
 License:        GPL-3.0-only
-URL:            https://github.com/sentriz/cliphist
-Source0:        cliphist-%{version}.tar.gz
-Source1:        vendor.tar.gz
+URL:            %{gourl}
+Source0:        %{gosource}
 
+BuildRequires:  golang-rpm-macros
 BuildRequires:  go-rpm-macros
-BuildRequires:  golang
-# Runtime dependencies
+# cliphist requires wl-clipboard for functionality
 Requires:       wl-clipboard
-Requires:       fzf
 
 %description
-cliphist is a clipboard history "manager" for Wayland that can write 
-clipboard changes to a history file and recall history with dmenu, 
-wofi, or fzf. It supports both text and images.
+cliphist is a clipboard history manager for Wayland that supports 
+both text and images. It is designed to work with any picker 
+like dmenu, rofi, or wofi.
 
 %prep
-%setup -q
-tar -xf %{SOURCE1}
+%goprep
 
 %build
-# Ensure we are using the internal vendor directory if it exists, 
-# or letting Go download modules if COPR has network access enabled.
-export GOFLAGS="-mod=vendor"
-go build -o %{name} .
+%gobuild -o %{gobuilddir}/bin/cliphist %{goipath}
 
 %install
-install -Dpm 0755 %{name} %{_bindir}/%{name}
+install -m 0755 -vd                     %{buildroot}%{_bindir}
+install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
 
 %files
 %license LICENSE
-%{_bindir}/%{name}
+%doc readme.md CHANGELOG.md
+%{_bindir}/cliphist
 
 %changelog
-%autochangelog
+* Wed Feb 04 2026 Your Name <you@example.com> - 0.7.0-1
+- Initial package for cliphist
