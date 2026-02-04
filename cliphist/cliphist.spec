@@ -20,15 +20,16 @@ both text and images. It is designed to work with any picker
 like dmenu, rofi, or wofi.
 
 %prep
-%goprep -k
+%autosetup -n cliphist-%{version}
 
 %build
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org,direct
-%gobuild -o %{buildroot}%{_bindir}/cliphist %{goipath}
+go build -v -o cliphist .
 
 %install
 install -m 0755 -vd %{buildroot}%{_bindir}
+install -m 0755 -vp cliphist %{buildroot}%{_bindir}/
 
 %files
 %license LICENSE
