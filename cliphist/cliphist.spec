@@ -11,8 +11,8 @@ Source0:        %{gosource}
 
 BuildRequires:  golang
 BuildRequires:  go-rpm-macros
-# cliphist requires wl-clipboard for functionality
 Requires:       wl-clipboard
+Requires:       xdg-utils
 
 %description
 cliphist is a clipboard history manager for Wayland that supports 
@@ -23,6 +23,8 @@ like dmenu, rofi, or wofi.
 %goprep -k
 
 %build
+export GO111MODULE=on
+export GOPROXY=https://proxy.golang.org,direct
 %gobuild -o %{buildroot}%{_bindir}/cliphist %{goipath}
 
 %install
