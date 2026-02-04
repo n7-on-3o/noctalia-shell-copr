@@ -1,6 +1,6 @@
 Name:               quickshell
 Version:            0.2.1
-Release:            8%{?dist}
+Release:            1%{?dist}
 Summary:            Flexible QtQuick based desktop shell toolkit
 # Code is LGPL, Hyprland protocols are BSD-3-Clause, wlr protocols are HPND-sell-variant
 License:            LGPL-3.0-or-later and BSD-3-Clause and HPND-sell-variant

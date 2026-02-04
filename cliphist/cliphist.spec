@@ -9,7 +9,7 @@ License:        GPL-3.0-only
 URL:            %{gourl}
 Source0:        %{gosource}
 
-BuildRequires:  golang-rpm-macros
+BuildRequires:  golang
 BuildRequires:  go-rpm-macros
 # cliphist requires wl-clipboard for functionality
 Requires:       wl-clipboard
@@ -20,20 +20,18 @@ both text and images. It is designed to work with any picker
 like dmenu, rofi, or wofi.
 
 %prep
-%goprep
+%goprep -k
 
 %build
-%gobuild -o %{gobuilddir}/bin/cliphist %{goipath}
+%gobuild -o %{buildroot}%{_bindir}/cliphist %{goipath}
 
 %install
-install -m 0755 -vd                     %{buildroot}%{_bindir}
-install -m 0755 -vp %{gobuilddir}/bin/* %{buildroot}%{_bindir}/
+install -m 0755 -vd %{buildroot}%{_bindir}
 
 %files
 %license LICENSE
-%doc readme.md CHANGELOG.md
+%doc readme.md
 %{_bindir}/cliphist
 
 %changelog
-* Wed Feb 04 2026 Your Name <you@example.com> - 0.7.0-1
-- Initial package for cliphist
+%autochangelog
